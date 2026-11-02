@@ -6,10 +6,8 @@ import Dashboard from "./components/dashboard";
 import Raisecomplaint from "./components/raisecomplaint";
 import Viewcomplaints from  "./components/viewcomplaints";
 import ComplaintCard from  "./components/complaintcard";
-import Trendingcomplaints from "./components/trendingcomplaints";
 import StatisticsDashboard from "./components/statisticspage";
 import Complaintdetails from "./components/complaintdetailspage"
-import Signup from "./components/signup";
 import Profile from "./components/profile";
 import GenerateReport from "./components/generatereports";
 import ReportResults from "./components/reportresults";
