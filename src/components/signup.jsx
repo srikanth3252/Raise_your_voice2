@@ -16,6 +16,7 @@ function Signup() {
     const [message, setmessage] = useState("");
     const [loadingotp, setloadingotp] = useState(false);
     const [loadingaccount, setloadingaccount] = useState(false);
+    const [otpPop, setOtpPop] = useState(false);
 
     async function sendotp() {
         setmessage("");
@@ -49,13 +50,14 @@ function Signup() {
 
             setmessage(data.message || "OTP request completed");
 
-            if (!res.ok) {
-                setmessage(data.message || "Failed to send OTP");
-            }
-        } catch (err) {
-            setmessage("Unable to connect to server. Please try again.");
-            console.error(err);
-        } finally {
+            const data = await res.json();
+
+if (res.ok) {
+  setmessage("");
+  setOtpPop(true);
+} else {
+  setmessage(data.message || "Failed to send OTP");
+} finally {
             setloadingotp(false);
         }
     }
@@ -119,16 +121,13 @@ function Signup() {
 
             const data = await res.json();
 
-            if (
-                res.ok &&
-                data.message === "data inserted in database successfully"
-            ) {
+            if (res.ok)
+            {
                 setpop(true);
                 setmessage("");
-            } else {
-                setmessage(
-                    data.message || "Account creation failed"
-                );
+            } else 
+            {
+                setmessage(data.message || "Account creation failed");
             }
         } catch (err) {
             setmessage("Unable to connect to server. Please try again.");
@@ -329,6 +328,24 @@ function Signup() {
                     </div>
                 </div>
             )}
+
+            {otpPop && (
+  <div className="popup-overlay">
+    <div className="popup-box">
+      <div className="popup-icon">✓</div>
+      <h2>OTP Sent Successfully!</h2>
+      <p>Please check your university email for the verification code.</p>
+      <button
+        type="button"
+        className="popup-login-btn"
+        onClick={() => setOtpPop(false)}
+      >
+        Continue
+      </button>
+    </div>
+  </div>
+)}
+
         </main>
     );
 }
