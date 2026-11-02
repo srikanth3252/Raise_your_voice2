@@ -16,7 +16,7 @@ function Signup() {
     {
         try 
         {
-            const res = await fetch("http://localhost:2000/sendotp", {
+            const res = await fetch("https://raise-your-voice2.onrender.com/sendotp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -86,7 +86,7 @@ function Signup() {
         try 
         {
             const res = await fetch(
-                "http://localhost:2000/verify_otp_insert_data",
+                "https://raise-your-voice2.onrender.com/verify_otp_insert_data",
                 {
                     method: "POST",
                     headers: 

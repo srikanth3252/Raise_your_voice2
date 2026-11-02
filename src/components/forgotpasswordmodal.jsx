@@ -15,7 +15,7 @@ function ForgotPasswordModal({ onClose }) {
     const [loading, setLoading] = useState(false);
 
     async function callAPI(endpoint, body) {
-        const response = await fetch(`http://localhost:2000/${endpoint}`, {
+        const response = await fetch(`https://raise-your-voice2.onrender.com/${endpoint}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

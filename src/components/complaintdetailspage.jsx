@@ -42,7 +42,7 @@ import "../styles/comments.css";
 
 
 
-const API = "http://localhost:2000";
+const API = "https://raise-your-voice2.onrender.com";
 
 
 

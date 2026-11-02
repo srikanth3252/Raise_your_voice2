@@ -22,7 +22,7 @@ import {
 
 import "../styles/dashboard.css";
 
-const API = "http://localhost:2000";
+const API = "https://raise-your-voice2.onrender.com";
 
 function Dashboard() {
     const navigate = useNavigate();

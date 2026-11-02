@@ -17,7 +17,7 @@ function Trendingcomplaints()
         try
         {
             let res = await fetch(
-                "http://localhost:2000/gettrendingcomplaints"
+                "https://raise-your-voice2.onrender.com/gettrendingcomplaints"
             );
 
             let data = await res.json();

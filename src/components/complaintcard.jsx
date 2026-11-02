@@ -61,7 +61,7 @@ function ComplaintCard({ complaint }) {
                 });
 
                 const response = await fetch(
-                    `http://localhost:2000/likes/status?${params.toString()}`
+                    `https://raise-your-voice2.onrender.com/likes/status?${params.toString()}`
                 );
 
                 const data = await response.json();
@@ -103,7 +103,7 @@ function ComplaintCard({ complaint }) {
         setError("");
 
         try {
-            const response = await fetch("http://localhost:2000/likes", {
+            const response = await fetch("https://raise-your-voice2.onrender.com/likes", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -138,7 +138,7 @@ async function handleViewComplaint() {
 
     try {
         const response = await fetch(
-            `http://localhost:2000/complaint/${complaint.complaint_id}`
+            `https://raise-your-voice2.onrender.com/complaint/${complaint.complaint_id}`
         );
 
         const data = await response.json();
@@ -171,7 +171,7 @@ async function handleViewComplaint() {
 
         try {
             const response = await fetch(
-                `http://localhost:2000/comments/${complaint.complaint_id}`
+                `https://raise-your-voice2.onrender.com/comments/${complaint.complaint_id}`
             );
 
             const data = await response.json();
@@ -218,7 +218,7 @@ async function handleViewComplaint() {
         setCommentError("");
 
         try {
-            const response = await fetch("http://localhost:2000/comments", {
+            const response = await fetch("https://raise-your-voice2.onrender.com/comments", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -16,7 +16,7 @@ function Profile() {
         async function getUserDetails() {
             try {
                 const res = await fetch(
-                    "http://localhost:2000/get_user_details",
+                    "https://raise-your-voice2.onrender.com/get_user_details",
                     {
                         method: "POST",
                         headers: {

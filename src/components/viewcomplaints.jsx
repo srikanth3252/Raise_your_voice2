@@ -27,13 +27,13 @@ function Viewcomplaints() {
             try {
                 const term = search.trim();
 
-                let url = "http://localhost:2000/getcomplaints";
+                let url = "https://raise-your-voice2.onrender.com/getcomplaints";
 
                 if (term) {
                     if (/^\d+$/.test(term)) {
-                        url = `http://localhost:2000/search-complaint/${encodeURIComponent(term)}`;
+                        url = `https://raise-your-voice2.onrender.com/search-complaint/${encodeURIComponent(term)}`;
                     } else {
-                        url = `http://localhost:2000/search-complaints?q=${encodeURIComponent(term)}`;
+                        url = `https://raise-your-voice2.onrender.com/search-complaints?q=${encodeURIComponent(term)}`;
                     }
                 }
 

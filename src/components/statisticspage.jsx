@@ -43,7 +43,7 @@ function StatisticsDashboard() {
 
     try {
       const response = await fetch(
-        "http://localhost:2000/statisticsdashboard"
+        "https://raise-your-voice2.onrender.com/statisticsdashboard"
       );
 
       const data = await response.json();

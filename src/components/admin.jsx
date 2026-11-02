@@ -23,7 +23,7 @@ function Admin() {
     }
 
     try {
-      const res = await fetch("http://localhost:2000/verify_admin", {
+      const res = await fetch("https://raise-your-voice2.onrender.com/verify_admin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

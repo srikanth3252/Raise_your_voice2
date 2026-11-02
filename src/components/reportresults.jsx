@@ -136,7 +136,7 @@ const handleViewComplaint = async (complaint) => {
         setViewingComplaint(complaint.complaint_id);
 
         const response = await fetch(
-            `http://localhost:2000/complaint/${complaint.complaint_id}`
+            `https://raise-your-voice2.onrender.com/complaint/${complaint.complaint_id}`
         );
 
         const data = await response.json();

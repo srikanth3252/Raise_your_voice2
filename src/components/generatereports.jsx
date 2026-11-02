@@ -112,7 +112,7 @@ function GenerateReport() {
             setLoading(true);
 
             const response = await fetch(
-                "http://localhost:2000/generatereport",
+                "https://raise-your-voice2.onrender.com/generatereport",
                 {
                     method: "POST",
                     headers: {

@@ -37,7 +37,7 @@ function ConversationRoom() {
             });
 
             const response = await fetch(
-                `http://localhost:2000/conversation/${complaintId}?${params.toString()}`
+                `https://raise-your-voice2.onrender.com/conversation/${complaintId}?${params.toString()}`
             );
 
             const data = await response.json();
@@ -108,7 +108,7 @@ function ConversationRoom() {
             setError("");
 
             const response = await fetch(
-                "http://localhost:2000/conversation",
+                "https://raise-your-voice2.onrender.com/conversation",
                 {
                     method: "POST",
                     headers: {
