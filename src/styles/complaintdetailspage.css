@@ -1,1318 +1,2227 @@
 /* FULL PAGE BACKGROUND */
+
 html,
+
 body,
+
 #root {
+
     min-height: 100%;
+
     margin: 0;
+
     background: #080f20;
+
     font-family: "Inter", "Segoe UI", Arial, sans-serif;
+
 }
 
 body {
+
     min-height: 100vh;
+
 }
 
 /* MAIN CONTAINER */
+
 .container {
+
     width: min(1100px, 94%);
+
     margin: 35px auto;
+
     padding: 30px;
+
     background: #0d1930;
+
     border: 1px solid #233858;
+
     border-radius: 18px;
+
     color: #eaf1ff;
+
     box-sizing: border-box;
+
 }
 
 /* BACK BUTTON */
+
 .back-button {
+
     display: inline-flex;
+
     align-items: center;
+
     gap: 8px;
+
     background: #1b2d49;
+
     color: #cbd5e1;
+
     border: 1px solid #344b6d;
+
     border-radius: 8px;
+
     padding: 10px 15px;
+
     cursor: pointer;
+
     transition: 0.2s;
+
 }
 
 .back-button:hover {
+
     background: #294466;
+
     color: white;
+
 }
 
 /* PAGE TITLE */
+
 .page-title {
+
     margin: 25px 0 8px;
+
     font-size: 30px;
+
     font-weight: 750;
+
     color: #f1f5ff;
+
 }
 
 .subtitle {
+
     margin-bottom: 28px;
+
     color: #91a6c5;
+
     font-size: 14px;
+
 }
 
 /* COMPLAINT HEADER */
+
 .complaint-header {
+
     padding: 24px;
+
     background: linear-gradient(135deg, #142746, #172e50);
+
     border: 1px solid #294568;
+
     border-radius: 14px;
+
     margin-bottom: 25px;
+
 }
 
 .complaint-heading-row {
+
     display: flex;
+
     align-items: flex-start;
+
     justify-content: space-between;
+
     gap: 20px;
+
 }
 
 .complaint-title {
+
     margin: 0 0 12px;
+
     font-size: 24px;
+
     color: #f1f5ff;
+
 }
 
 .category {
+
     display: flex;
+
     align-items: center;
+
     gap: 7px;
+
     color: #60a5fa;
+
     font-size: 14px;
+
 }
 
 .complaint-id {
+
     margin-top: 15px;
+
     color: #91a6c5;
+
     font-size: 13px;
+
 }
 
 /* STATUS */
+
 .status {
+
     display: inline-flex;
+
     align-items: center;
+
     padding: 7px 13px;
+
     border-radius: 20px;
+
     background: #344155;
+
     color: #e2e8f0;
+
     font-size: 12px;
+
     font-weight: 700;
+
     white-space: nowrap;
+
 }
 
 .status-pending {
+
     background: rgba(245, 158, 11, 0.15);
+
     color: #fbbf24;
+
 }
 
 .status-in-progress {
+
     background: rgba(59, 130, 246, 0.16);
+
     color: #60a5fa;
+
 }
 
 .status-resolved {
+
     background: rgba(34, 197, 94, 0.15);
+
     color: #4ade80;
+
 }
 
 .status-rejected {
+
     background: rgba(239, 68, 68, 0.15);
+
     color: #f87171;
+
 }
 
 /* INFORMATION CARDS */
+
 .info-row {
+
     display: grid;
+
     grid-template-columns: repeat(3, 1fr);
+
     gap: 18px;
+
     margin-bottom: 28px;
+
 }
 
 .info-card {
+
     padding: 20px;
+
     background: #142440;
+
     border: 1px solid #293e60;
+
     border-radius: 12px;
+
 }
 
 .info-card h3 {
+
     display: flex;
+
     align-items: center;
+
     gap: 7px;
+
     margin: 0 0 12px;
+
     color: #91a6c5;
+
     font-size: 13px;
+
     font-weight: 600;
+
 }
 
 .info-card p {
+
     margin: 0;
+
     color: #eaf1ff;
+
     font-size: 17px;
+
     font-weight: 650;
+
     overflow-wrap: anywhere;
+
 }
 
 /* GENERAL SECTIONS */
+
 .section {
+
     margin-bottom: 28px;
+
 }
 
 .section h2,
+
 #adminControls h2 {
+
     display: flex;
+
     align-items: center;
+
     gap: 9px;
+
     margin-bottom: 15px;
+
     color: #eaf1ff;
+
     font-size: 19px;
+
 }
 
 /* DESCRIPTION */
+
 .description-box {
+
     padding: 22px;
+
     min-height: 100px;
+
     background: #142440;
+
     border: 1px solid #293e60;
+
     border-radius: 12px;
+
     color: #cbd5e1;
+
     font-size: 15px;
+
     line-height: 1.8;
+
     white-space: pre-wrap;
+
     overflow-wrap: anywhere;
+
 }
 
 /* PROOF */
+
 #proofContainer {
+
     padding: 20px;
+
     background: #142440;
+
     border: 1px solid #293e60;
+
     border-radius: 12px;
+
     color: #91a6c5;
+
     text-align: center;
+
 }
 
 .proof-image {
+
     display: block;
+
     max-width: 100%;
+
     max-height: 550px;
+
     margin: auto;
+
     border-radius: 10px;
+
     object-fit: contain;
+
 }
 
 .proof-video {
+
     display: block;
+
     width: 100%;
+
     max-height: 500px;
+
     border-radius: 10px;
+
     background: #000;
+
 }
 
 #proofContainer iframe {
+
     display: block;
+
     border: none;
+
     border-radius: 10px;
+
 }
 
 #proofContainer a {
+
     display: inline-block;
+
     color: #60a5fa;
+
     text-decoration: none;
+
     font-weight: 600;
+
 }
 
 #proofContainer a:hover {
+
     text-decoration: underline;
+
 }
 
 /* COMPLAINT ACTIONS */
+
 .complaint-actions-section {
+
     padding: 22px;
+
     background: #142440;
+
     border: 1px solid #293e60;
+
     border-radius: 12px;
+
 }
 
 .complaint-page-actions {
+
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 13px;
+
 }
 
 /* COMMON ACTION BUTTONS */
+
 .conversation-btn,
+
 .comments-page-btn,
+
 .detail-support-btn {
+
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
+
     gap: 9px;
+
     padding: 12px 19px;
+
     border: none;
+
     border-radius: 9px;
+
     color: white;
+
     font-size: 14px;
+
     font-weight: 650;
+
     cursor: pointer;
+
     transition: 0.2s;
+
 }
 
 .conversation-btn {
+
     background: linear-gradient(135deg, #2563eb, #0ea5e9);
+
 }
 
 .comments-page-btn {
+
     background: #263e60;
+
     border: 1px solid #3b5578;
+
 }
 
 .detail-support-btn {
+
     background: linear-gradient(135deg, #087fba, #2563eb);
+
 }
 
 .detail-support-btn.liked {
+
     background: linear-gradient(135deg, #15803d, #16a34a);
+
 }
 
 .detail-support-btn:disabled {
+
     opacity: 0.6;
+
     cursor: not-allowed;
+
 }
 
 .conversation-btn:hover,
+
 .comments-page-btn:hover,
+
 .detail-support-btn:hover:not(:disabled) {
+
     transform: translateY(-2px);
+
     filter: brightness(1.15);
+
 }
 
 /* SUPPORT COUNT */
+
 .detail-support-count {
+
     display: flex;
+
     align-items: center;
+
     gap: 8px;
+
     color: #93c5fd;
+
     font-size: 14px;
+
     font-weight: 600;
+
     padding: 0 8px;
+
 }
 
 /* ACTION ERROR */
+
 .cc-error {
+
     margin-top: 15px;
+
     color: #f87171;
+
     font-size: 13px;
+
 }
 
 /* ADMIN CONTROLS */
+
 #adminControls {
+
     margin-top: 28px;
+
     padding: 24px;
+
     background: #142440;
+
     border: 1px solid #293e60;
+
     border-radius: 12px;
+
 }
 
 .admin-buttons {
+
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 13px;
+
 }
 
 .admin-buttons button {
+
     padding: 12px 19px;
+
     border: none;
+
     border-radius: 9px;
+
     color: white;
+
     font-size: 13px;
+
     font-weight: 650;
+
     cursor: pointer;
+
     transition: 0.2s;
+
 }
 
 .admin-buttons button:hover:not(:disabled) {
+
     transform: translateY(-2px);
+
     filter: brightness(1.12);
+
 }
 
 .admin-buttons button:disabled {
+
     opacity: 0.5;
+
     cursor: not-allowed;
+
 }
 
 .resolved-btn {
+
     background: #15803d;
+
 }
 
 .pending-btn {
+
     background: #b7791f;
+
 }
 
 .reject-btn {
+
     background: #b91c1c;
+
 }
 
 /* RESPONSIVE */
+
 @media (max-width: 768px) {
+
     .container {
+
         width: 95%;
+
         padding: 20px;
+
     }
 
     .info-row {
+
         grid-template-columns: 1fr;
+
     }
 
     .complaint-heading-row {
+
         flex-direction: column;
+
     }
 
     .complaint-title {
+
         font-size: 21px;
+
     }
+
 }
 
 @media (max-width: 480px) {
+
     .container {
+
         padding: 15px;
+
         margin: 15px auto;
+
     }
 
     .page-title {
+
         font-size: 25px;
+
     }
 
     .complaint-page-actions {
+
         flex-direction: column;
+
     }
 
     .complaint-page-actions button {
+
         width: 100%;
+
     }
 
     .admin-buttons {
+
         flex-direction: column;
+
     }
 
     .admin-buttons button {
+
         width: 100%;
+
     }
 
     .info-card {
+
         padding: 16px;
+
     }
+
 }
 
-
-
-/* PREVENT BACKGROUND SCROLL */
-body.comments-open {
-    overflow: hidden;
-}
-
-/* KEEP POPUP FIXED */
+/* COMMENTS POPUP */
+body.comments-open { overflow: hidden; }
 .comments-overlay {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    overscroll-behavior: contain;
+ position: fixed; inset: 0; z-index: 9999;
+ display: flex; align-items: center; justify-content: center;
+ padding: 20px; box-sizing: border-box;
+ background: rgba(3, 9, 22, 0.78);
+ backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+ overflow-y: auto; overscroll-behavior: contain;
 }
-
-/* ONLY COMMENTS LIST SHOULD SCROLL */
 .comments-modal {
-    max-height: 85vh;
-    overflow: hidden;
+ position: relative; display: flex; flex-direction: column;
+ width: min(100%, 600px); max-height: calc(100vh - 40px);
+ overflow: hidden; box-sizing: border-box;
+ background: #0d1930; border: 1px solid #294568;
+ border-radius: 18px; color: #eaf1ff;
+ box-shadow: 0 24px 70px rgba(0,0,0,.5);
 }
-
-.comments-list {
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    flex: 1;
-    min-height: 0;
+.comments-list { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+@media (max-width: 600px) {
+ .comments-overlay { padding: 12px; }
+ .comments-modal { width: 100%; max-height: calc(100vh - 24px); }
 }
-
-
 
 /* ==================================
+
    COMPLAINT + CONVERSATION LAYOUT
-================================== */
+
+\================================== */
 
 .complaint-conversation-layout {
+
     width: 100%;
+
     min-height: 100vh;
+
     display: block;
+
 }
 
 .complaint-conversation-layout.chat-open {
+
     display: grid;
+
     grid-template-columns: minmax(0, 1fr) minmax(350px, 0.85fr);
+
     gap: 20px;
+
     align-items: start;
+
     padding: 20px;
+
 }
 
 .complaint-details-panel {
+
     min-width: 0;
+
 }
 
 .complaint-details-panel .container {
+
     width: 100%;
+
     max-width: none;
+
     margin: 0 auto;
+
 }
 
 /* ==================================
+
    RIGHT SIDE CONVERSATION PANEL
-================================== */
+
+\================================== */
 
 .conversation-side-panel {
+
     position: sticky;
+
     top: 20px;
+
     height: calc(100vh - 40px);
+
     min-height: 550px;
+
     background: #0d1930;
+
     border: 1px solid #294568;
+
     border-radius: 14px;
+
     display: flex;
+
     flex-direction: column;
+
     overflow: hidden;
+
     color: #eaf1ff;
+
 }
 
 .side-chat-header {
+
     padding: 18px;
+
     background: #132541;
+
     border-bottom: 1px solid #294568;
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
+
 }
 
 .side-chat-header h2 {
+
     margin: 0 0 5px;
+
     font-size: 20px;
+
     color: #ffffff;
+
 }
 
 .side-chat-header p {
+
     margin: 0;
+
     color: #60a5fa;
+
     font-size: 12px;
+
 }
 
 .side-chat-header button {
+
     background: #263d5e;
+
     border: none;
+
     color: white;
+
     padding: 8px;
+
     border-radius: 7px;
+
     cursor: pointer;
+
 }
 
 .side-chat-header button:hover {
+
     background: #36547c;
+
 }
 
 .side-chat-info {
+
     padding: 14px 17px;
+
     background: #101f37;
+
     border-bottom: 1px solid #294568;
+
 }
 
 .side-chat-info strong {
+
     color: #93c5fd;
+
     font-size: 14px;
+
 }
 
 .side-chat-info p {
+
     color: #b8c9df;
+
     font-size: 12px;
+
     line-height: 1.6;
+
     margin: 7px 0 0;
+
 }
 
 /* ==================================
+
    CHAT MESSAGES
-================================== */
+
+\================================== */
 
 .side-chat-messages {
+
     flex: 1;
+
     min-height: 0;
+
     overflow-y: auto;
+
     padding: 18px;
+
     display: flex;
+
     flex-direction: column;
+
     gap: 16px;
+
 }
 
 .side-chat-messages::-webkit-scrollbar {
+
     width: 6px;
+
 }
 
 .side-chat-messages::-webkit-scrollbar-thumb {
+
     background: #385477;
+
     border-radius: 10px;
+
 }
 
 .side-message {
+
     max-width: 85%;
+
     display: flex;
+
     flex-direction: column;
+
 }
 
 .side-message-mine {
+
     align-self: flex-end;
+
     align-items: flex-end;
+
 }
 
 .side-message-other {
+
     align-self: flex-start;
+
     align-items: flex-start;
+
 }
 
 .side-message-author {
+
     font-size: 11px;
+
     color: #93b9e5;
+
     margin-bottom: 5px;
+
 }
 
 .side-message-bubble {
+
     padding: 11px 14px;
+
     border-radius: 12px;
+
     font-size: 13px;
+
     line-height: 1.6;
+
     overflow-wrap: anywhere;
+
     white-space: pre-wrap;
+
 }
 
 .side-message-mine .side-message-bubble {
+
     background: #2563eb;
+
     color: white;
+
     border-bottom-right-radius: 3px;
+
 }
 
 .side-message-other .side-message-bubble {
+
     background: #1c304c;
+
     color: #eaf1ff;
+
     border-bottom-left-radius: 3px;
+
 }
 
 .side-message-time {
+
     font-size: 10px;
+
     color: #7187a5;
+
     margin-top: 5px;
+
 }
 
 /* ==================================
+
    EMPTY AND ERROR STATES
-================================== */
+
+\================================== */
 
 .side-chat-empty {
+
     margin: auto;
+
     text-align: center;
+
     color: #91a5c1;
+
     font-size: 13px;
+
 }
 
 .side-chat-empty h3 {
+
     color: #dceaff;
+
     margin: 10px 0 5px;
+
 }
 
 .side-chat-error {
+
     color: #fca5a5;
+
     font-size: 12px;
+
     padding: 8px 15px;
+
     display: flex;
+
     align-items: center;
+
     gap: 6px;
+
 }
 
 /* ==================================
+
    MESSAGE INPUT
-================================== */
+
+\================================== */
 
 .side-chat-form {
+
     padding: 14px;
+
     background: #132541;
+
     border-top: 1px solid #294568;
+
     display: flex;
+
     flex-direction: column;
+
     gap: 10px;
+
 }
 
 .side-chat-form textarea {
+
     width: 100%;
+
     resize: vertical;
+
     min-height: 55px;
+
     max-height: 130px;
+
     background: #091528;
+
     border: 1px solid #344b6b;
+
     border-radius: 8px;
+
     color: white;
+
     padding: 12px;
+
     outline: none;
+
     font-family: inherit;
+
     font-size: 13px;
+
 }
 
 .side-chat-form textarea:focus {
+
     border-color: #3b82f6;
+
 }
 
 .side-chat-form textarea::placeholder {
+
     color: #7187a5;
+
 }
 
 .side-chat-form-bottom {
+
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
+
 }
 
 .side-chat-form-bottom span {
+
     font-size: 11px;
+
     color: #7187a5;
+
 }
 
 .side-chat-form button {
+
     display: flex;
+
     align-items: center;
+
     gap: 8px;
+
     padding: 10px 20px;
+
     background: #2563eb;
+
     color: white;
+
     border: none;
+
     border-radius: 8px;
+
     cursor: pointer;
+
 }
 
 .side-chat-form button:hover {
+
     background: #1d4ed8;
+
 }
 
 .side-chat-form button:disabled {
+
     opacity: 0.5;
+
     cursor: not-allowed;
+
 }
 
 /* ==================================
+
    RESPONSIVE DESIGN
-================================== */
+
+\================================== */
 
 @media (max-width: 950px) {
+
     .complaint-conversation-layout.chat-open {
+
         grid-template-columns: 1fr;
+
     }
 
     .conversation-side-panel {
+
         position: relative;
+
         top: 0;
+
         height: 650px;
+
         min-height: 500px;
+
     }
+
 }
 
 @media (max-width: 600px) {
+
     .complaint-conversation-layout.chat-open {
+
         padding: 10px;
+
         gap: 15px;
+
     }
 
     .conversation-side-panel {
+
         height: 600px;
+
         min-height: 450px;
+
     }
 
     .side-message {
+
         max-width: 92%;
+
     }
+
 }
 
-
-
 /* =====================================
+
    ADMIN DECISION SECTION
-===================================== */
+
+\===================================== */
 
 #adminControls {
+
     margin-top: 25px;
+
     padding: 24px;
+
     background: #101d35;
+
     border: 1px solid #263b5c;
+
     border-radius: 14px;
+
     color: #f1f5f9;
+
 }
 
 #adminControls h2 {
+
     color: #f8fafc;
+
     font-size: 21px;
+
     margin-bottom: 20px;
+
 }
 
 .admin-buttons {
+
     display: flex;
+
     flex-wrap: wrap;
+
     gap: 12px;
+
     margin-bottom: 20px;
+
 }
 
 .admin-buttons button {
+
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
+
     gap: 8px;
+
     padding: 11px 18px;
+
     border: 1px solid transparent;
+
     border-radius: 8px;
+
     color: white;
+
     font-size: 14px;
+
     font-weight: 600;
+
     cursor: pointer;
+
     transition: 0.2s ease;
+
 }
 
 .resolved-btn {
+
     background: #087f5b;
+
 }
 
 .resolved-btn:hover,
+
 .resolved-btn.selected {
+
     background: #059669;
+
     border-color: #6ee7b7;
+
 }
 
 .reject-btn {
+
     background: #b42335;
+
 }
 
 .reject-btn:hover,
+
 .reject-btn.selected {
+
     background: #dc3545;
+
     border-color: #fda4af;
+
 }
 
 /* Decision form */
 
 .decision-form {
+
     display: flex;
+
     flex-direction: column;
+
     gap: 12px;
+
     margin-top: 20px;
+
     padding: 20px;
+
     background: #172844;
+
     border: 1px solid #344c70;
+
     border-radius: 12px;
+
 }
 
 .decision-form h3 {
+
     color: #93c5fd;
+
     font-size: 18px;
+
     margin: 0 0 8px;
+
 }
 
 .decision-form label {
+
     color: #e2e8f0;
+
     font-size: 14px;
+
     font-weight: 600;
+
 }
 
 .decision-form textarea {
+
     width: 100%;
+
     min-height: 110px;
+
     padding: 13px;
+
     resize: vertical;
+
     background: #0b172b;
+
     color: #f8fafc;
+
     border: 1px solid #405675;
+
     border-radius: 8px;
+
     outline: none;
+
     font-family: inherit;
+
     font-size: 14px;
+
 }
 
 .decision-form textarea:focus {
+
     border-color: #60a5fa;
+
     box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+
 }
 
 .decision-form input[type="file"] {
+
     width: 100%;
+
     padding: 12px;
+
     background: #0b172b;
+
     color: #cbd5e1;
+
     border: 1px dashed #526987;
+
     border-radius: 8px;
+
     font-size: 13px;
+
 }
 
 .decision-form p {
+
     color: #93c5fd;
+
     font-size: 13px;
+
     overflow-wrap: anywhere;
+
 }
 
 .decision-form button[type="submit"] {
+
     align-self: flex-start;
+
     margin-top: 8px;
+
     padding: 12px 22px;
+
     background: #2563eb;
+
     color: white;
+
     border: none;
+
     border-radius: 8px;
+
     font-size: 14px;
+
     font-weight: 600;
+
     cursor: pointer;
+
     transition: 0.2s ease;
+
 }
 
 .decision-form button[type="submit"]:hover {
+
     background: #1d4ed8;
+
 }
 
 .decision-form button[type="submit"]:disabled {
+
     opacity: 0.6;
+
     cursor: not-allowed;
+
 }
 
 /* =====================================
+
    STUDENT DECISION HISTORY
-===================================== */
+
+\===================================== */
 
 .decision-history {
+
     margin-top: 25px;
+
     padding: 24px;
+
     background: #101d35;
+
     border: 1px solid #263b5c;
+
     border-radius: 14px;
+
     color: #f1f5f9;
+
 }
 
 .decision-history h2 {
+
     display: flex;
+
     align-items: center;
+
     gap: 10px;
+
     color: #f8fafc;
+
     font-size: 21px;
+
     margin-bottom: 18px;
+
 }
 
 .decision-history-card {
+
     padding: 20px;
+
     background: #172844;
+
     border: 1px solid #344c70;
+
     border-radius: 12px;
+
 }
 
 .decision-history-card h3 {
+
     display: inline-block;
+
     margin-bottom: 16px;
+
     padding: 8px 13px;
+
     background: #263d60;
+
     color: #93c5fd;
+
     border-radius: 7px;
+
     font-size: 16px;
+
 }
 
 .decision-history-card p {
+
     display: flex;
+
     align-items: center;
+
     flex-wrap: wrap;
+
     gap: 6px;
+
     color: #cbd5e1;
+
     font-size: 14px;
+
     line-height: 1.7;
+
     margin: 12px 0;
+
 }
 
 .decision-history-card strong {
+
     color: #f8fafc;
+
 }
 
 .decision-history-card .description-box {
+
     margin-top: 8px;
+
     padding: 15px;
+
     background: #0b172b;
+
     color: #e2e8f0;
+
     border: 1px solid #344c70;
+
     border-radius: 8px;
+
     line-height: 1.7;
+
     white-space: pre-wrap;
+
     overflow-wrap: anywhere;
+
 }
 
 .decision-proof {
+
     margin-top: 20px;
+
     padding-top: 15px;
+
     border-top: 1px solid #344c70;
+
 }
 
 .decision-proof h4 {
+
     margin-bottom: 12px;
+
     color: #93c5fd;
+
     font-size: 16px;
+
 }
 
 .decision-proof a {
+
     display: inline-block;
+
     margin-top: 10px;
+
     color: #60a5fa;
+
     text-decoration: underline;
+
 }
 
 .decision-proof a:hover {
+
     color: #93c5fd;
+
 }
 
 /* =====================================
+
    MOBILE RESPONSIVENESS
-===================================== */
+
+\===================================== */
 
 @media (max-width: 600px) {
+
     #adminControls,
+
     .decision-history {
+
         padding: 16px;
+
     }
 
     .admin-buttons {
+
         flex-direction: column;
+
     }
 
     .admin-buttons button {
+
         width: 100%;
+
     }
 
     .decision-form {
+
         padding: 14px;
+
     }
 
     .decision-form button[type="submit"] {
+
         width: 100%;
+
     }
 
     .decision-history-card {
+
         padding: 14px;
+
     }
+
 }
 
 .success-popup-overlay {
+
     position: fixed;
+
     inset: 0;
+
     background: rgba(5, 12, 30, 0.7);
+
     backdrop-filter: blur(5px);
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     z-index: 10000;
+
     padding: 20px;
+
 }
 
 .success-popup {
+
     background: white;
+
     width: 100%;
+
     max-width: 380px;
+
     padding: 35px 25px;
+
     border-radius: 18px;
+
     text-align: center;
+
     box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+
     animation: successPop 0.25s ease;
+
 }
 
 .success-popup-icon {
+
     width: 70px;
+
     height: 70px;
+
     background: #dcfce7;
+
     color: #16a34a;
+
     border-radius: 50%;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     margin: 0 auto 18px;
+
 }
 
 .success-popup h2 {
+
     color: #172554;
+
     margin-bottom: 10px;
+
 }
 
 .success-popup p {
+
     color: #64748b;
+
     margin-bottom: 24px;
+
 }
 
 .success-popup button {
+
     background: #2563eb;
+
     color: white;
+
     border: none;
+
     padding: 11px 35px;
+
     border-radius: 8px;
+
     cursor: pointer;
+
     font-weight: 600;
+
 }
 
 @keyframes successPop {
+
     from {
+
         opacity: 0;
+
         transform: scale(0.85);
+
     }
+
     to {
+
         opacity: 1;
+
         transform: scale(1);
+
     }
+
 }
 
-
 /* =====================================
+
    ADMIN DECISION MODAL
+
    Matches ComplaintDetails.jsx:
+
    decision-modal-overlay / decision-modal
-===================================== */
+
+\===================================== */
 
 .decision-modal-overlay {
+
     position: fixed;
+
     inset: 0;
+
     z-index: 9998;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     padding: 20px;
+
     overflow-y: auto;
+
     background: rgba(3, 9, 22, 0.78);
+
     backdrop-filter: blur(6px);
+
     -webkit-backdrop-filter: blur(6px);
+
 }
 
 .decision-modal {
+
     position: relative;
+
     width: min(100%, 520px);
+
     max-height: calc(100vh - 40px);
+
     overflow-y: auto;
+
     box-sizing: border-box;
+
     padding: 34px;
+
     border: 1px solid #344c70;
+
     border-radius: 18px;
+
     background: linear-gradient(145deg, #142440, #0d1930);
+
     color: #eaf1ff;
+
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+
     animation: decisionModalEnter 0.22s ease-out;
+
 }
 
 .decision-modal-close {
+
     position: absolute;
+
     top: 15px;
+
     right: 15px;
+
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
+
     width: 38px;
+
     height: 38px;
+
     padding: 0;
+
     border: 1px solid #405675;
+
     border-radius: 9px;
+
     background: #203653;
+
     color: #eaf1ff;
+
     cursor: pointer;
+
     transition: background 0.2s ease, transform 0.2s ease;
+
 }
 
 .decision-modal-close:hover {
+
     background: #344c70;
+
     transform: rotate(90deg);
+
 }
 
 .decision-modal-icon {
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     width: 64px;
+
     height: 64px;
+
     margin: 0 0 18px;
+
     border-radius: 50%;
+
 }
 
 .decision-modal-icon.resolved {
+
     background: rgba(16, 185, 129, 0.16);
+
     color: #34d399;
+
     border: 1px solid rgba(52, 211, 153, 0.35);
+
 }
 
 .decision-modal-icon.rejected {
+
     background: rgba(239, 68, 68, 0.16);
+
     color: #f87171;
+
     border: 1px solid rgba(248, 113, 113, 0.35);
+
 }
 
 .decision-modal > h2 {
+
     margin: 0 45px 10px 0;
+
     color: #f8fafc;
+
     font-size: 25px;
+
     line-height: 1.3;
+
 }
 
 .decision-modal-subtitle {
+
     margin: 0 0 25px;
+
     color: #aebfd7;
+
     font-size: 14px;
+
     line-height: 1.6;
+
 }
 
 .decision-modal label {
+
     display: block;
+
     margin: 18px 0 8px;
+
     color: #e2e8f0;
+
     font-size: 14px;
+
     font-weight: 650;
+
 }
 
 .decision-modal textarea {
+
     display: block;
+
     width: 100%;
+
     min-height: 125px;
+
     box-sizing: border-box;
+
     padding: 13px 14px;
+
     border: 1px solid #405675;
+
     border-radius: 10px;
+
     outline: none;
+
     resize: vertical;
+
     background: #091528;
+
     color: #f8fafc;
+
     font-family: inherit;
+
     font-size: 14px;
+
     line-height: 1.6;
+
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
 }
 
 .decision-modal textarea::placeholder {
+
     color: #8194af;
+
 }
 
 .decision-modal textarea:focus {
+
     border-color: #60a5fa;
+
     box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.16);
+
 }
 
 .decision-modal input[type="file"] {
+
     display: block;
+
     width: 100%;
+
     box-sizing: border-box;
+
     margin-top: 4px;
+
     padding: 12px;
+
     border: 1px dashed #526987;
+
     border-radius: 10px;
+
     background: #091528;
+
     color: #cbd5e1;
+
     font-family: inherit;
+
     font-size: 13px;
+
 }
 
 .decision-modal input[type="file"]::file-selector-button {
+
     margin-right: 12px;
+
     padding: 8px 12px;
+
     border: 0;
+
     border-radius: 7px;
+
     background: #294568;
+
     color: #f8fafc;
+
     cursor: pointer;
+
 }
 
 .decision-modal input[type="file"]::file-selector-button:hover {
+
     background: #36577f;
+
 }
 
 .decision-modal .selected-proof {
+
     margin: 9px 0 0;
+
     color: #93c5fd;
+
     font-size: 12px;
+
     overflow-wrap: anywhere;
+
 }
 
 .decision-modal-actions {
+
     display: flex;
+
     justify-content: flex-end;
+
     flex-wrap: wrap;
+
     gap: 11px;
+
     margin-top: 25px;
+
 }
 
 .decision-modal-actions button {
+
     display: inline-flex;
+
     align-items: center;
+
     justify-content: center;
+
     min-height: 42px;
+
     padding: 10px 18px;
+
     border: 1px solid transparent;
+
     border-radius: 9px;
+
     color: #fff;
+
     font-family: inherit;
+
     font-size: 14px;
+
     font-weight: 650;
+
     cursor: pointer;
+
     transition: filter 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+
 }
 
 .decision-modal-actions button:hover:not(:disabled) {
+
     filter: brightness(1.12);
+
     transform: translateY(-1px);
+
 }
 
 .decision-modal-actions button:disabled {
+
     opacity: 0.55;
+
     cursor: not-allowed;
+
 }
 
 .decision-cancel-btn {
+
     background: #263e60;
+
     border-color: #405675 !important;
+
 }
 
 .decision-confirm-resolve {
+
     background: #059669;
+
 }
 
 .decision-confirm-reject {
+
     background: #dc3545;
+
 }
 
 @keyframes decisionModalEnter {
+
     from {
+
         opacity: 0;
+
         transform: translateY(12px) scale(0.98);
+
     }
+
     to {
+
         opacity: 1;
+
         transform: translateY(0) scale(1);
+
     }
+
 }
 
 @media (max-width: 520px) {
+
     .decision-modal-overlay {
+
         align-items: flex-end;
+
         padding: 12px;
+
     }
 
     .decision-modal {
+
         width: 100%;
+
         max-height: calc(100vh - 24px);
+
         padding: 27px 20px 22px;
+
         border-radius: 16px;
+
     }
 
     .decision-modal > h2 {
+
         font-size: 22px;
+
     }
 
     .decision-modal-actions {
+
         flex-direction: column-reverse;
+
     }
 
     .decision-modal-actions button {
+
         width: 100%;
+
     }
+
 }

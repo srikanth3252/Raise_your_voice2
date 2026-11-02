@@ -239,3 +239,65 @@
         gap: 4px;
     }
 }
+/* =========================================
+   FIX COMMENTS POPUP FLICKERING
+========================================= */
+
+.comments-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 99999 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 20px !important;
+    overflow: hidden !important;
+
+    background: rgba(3, 9, 22, 0.82) !important;
+    backdrop-filter: blur(6px);
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    animation: none !important;
+    transition: none !important;
+}
+
+.comments-modal {
+    position: relative !important;
+
+    width: 100% !important;
+    max-width: 600px !important;
+    max-height: 85vh !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    overflow: hidden !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+
+    animation: none !important;
+    transition: none !important;
+
+    background: #101b32 !important;
+    border: 1px solid rgba(96, 165, 250, 0.3) !important;
+    border-radius: 16px !important;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+.comments-list {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+}
+
+body.comments-open {
+    overflow: hidden !important;
+}
