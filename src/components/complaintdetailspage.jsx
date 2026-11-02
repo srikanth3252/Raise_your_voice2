@@ -465,14 +465,11 @@ function ComplaintDetails() {
 
 
     function openComments() {
-
-        setShowComments(true);
-
-        setCommentText("");
-
-        fetchComments();
-
-    }
+    setCommentText("");
+    setCommentError("");
+    setShowComments(true);
+    fetchComments();
+}
 
 
 

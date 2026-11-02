@@ -19,48 +19,50 @@ function Signup() {
     const [otpPop, setOtpPop] = useState(false);
 
     async function sendotp() {
-        setmessage("");
+    setmessage("");
 
-        if (!emailid.trim()) {
-            seterrors({ emailid: "Email is required" });
-            return;
-        }
-
-        if (!/^[^\s@]+@srmap\.edu\.in$/i.test(emailid.trim())) {
-            seterrors({
-                emailid: "Enter a valid SRM AP email",
-            });
-            return;
-        }
-
-        setloadingotp(true);
-
-        try {
-            const res = await fetch(`${API_URL}/sendotp`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: emailid.trim(),
-                }),
-            });
-
-            const data = await res.json();
-
-            setmessage(data.message || "OTP request completed");
-
-            const data = await res.json();
-
-if (res.ok) {
-  setmessage("");
-  setOtpPop(true);
-} else {
-  setmessage(data.message || "Failed to send OTP");
-} finally {
-            setloadingotp(false);
-        }
+    if (!emailid.trim()) {
+        seterrors({ emailid: "Email is required" });
+        return;
     }
+
+    if (!/^[^\s@]+@srmap\.edu\.in$/i.test(emailid.trim())) {
+        seterrors({
+            emailid: "Enter a valid SRM AP email",
+        });
+        return;
+    }
+
+    setloadingotp(true);
+
+    try {
+        const res = await fetch(`${API_URL}/sendotp`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: emailid.trim(),
+            }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            setmessage("");
+            setOtpPop(true);
+        } else {
+            setmessage(data.message || "Failed to send OTP");
+        }
+
+    } catch (err) {
+        setmessage("Unable to connect to server. Please try again.");
+        console.error(err);
+
+    } finally {
+        setloadingotp(false);
+    }
+}
 
     async function createaccount() {
         const newerrors = {};
