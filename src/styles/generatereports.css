@@ -1,0 +1,586 @@
+
+/* =========================================
+   RAISE YOUR VOICE - GENERATE REPORTS
+   MIDNIGHT NAVY + ELECTRIC BLUE
+========================================= */
+
+.gr-page,
+.gr-page * {
+    box-sizing: border-box;
+}
+
+.gr-page {
+    --gr-bg: #080f20;
+    --gr-card: #101b32;
+    --gr-card-light: #142440;
+    --gr-blue: #3b82f6;
+    --gr-blue-light: #60a5fa;
+    --gr-text: #f1f5f9;
+    --gr-muted: #9aacc7;
+    --gr-border: rgba(100, 149, 237, 0.18);
+
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    padding: 34px max(5%, calc((100% - 1050px) / 2)) 0;
+    background: linear-gradient(135deg, #080f20, #0b1428, #070d19);
+    color: var(--gr-text);
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+.gr-page button,
+.gr-page input {
+    font: inherit;
+}
+
+.gr-page button:focus-visible,
+.gr-page input:focus-visible {
+    outline: 2px solid var(--gr-blue-light);
+    outline-offset: 3px;
+}
+
+.gr-page h1,
+.gr-page h2,
+.gr-page h3,
+.gr-page p {
+    margin-top: 0;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.gr-page .gr-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+.gr-page .gr-eyebrow {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #79b5ff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.gr-page .gr-header h1 {
+    margin-bottom: 9px;
+    color: #f1f5f9;
+    font-size: clamp(27px, 3vw, 35px);
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.gr-page .gr-header p {
+    margin-bottom: 0;
+    color: var(--gr-muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.gr-page .gr-back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    flex-shrink: 0;
+    min-height: 42px;
+    padding: 10px 15px;
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    border-radius: 9px;
+    background: rgba(59, 130, 246, 0.09);
+    color: #a8ceff;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.gr-page .gr-back-button:hover {
+    border-color: #60a5fa;
+    background: rgba(59, 130, 246, 0.2);
+    transform: translateY(-1px);
+}
+
+/* =========================================
+   COMMON PANELS
+========================================= */
+
+.gr-page .gr-panel {
+    width: 100%;
+    min-width: 0;
+    padding: 25px;
+    margin-bottom: 20px;
+    border: 1px solid var(--gr-border);
+    border-radius: 15px;
+    background: linear-gradient(145deg, #111f38, #0e192d);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================
+   REPORT TYPE PANEL
+========================================= */
+
+.gr-page .gr-report-type {
+    display: flex;
+    align-items: center;
+    gap: 19px;
+    min-height: 120px;
+    padding: 24px;
+    border-color: rgba(96, 165, 250, 0.27);
+    background: linear-gradient(
+        110deg,
+        #122b50,
+        #12365f 65%,
+        #102a46
+    );
+}
+
+.gr-page .gr-section-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 55px;
+    height: 55px;
+    border: 1px solid rgba(147, 197, 253, 0.25);
+    border-radius: 14px;
+    background: rgba(59, 130, 246, 0.17);
+    color: #93c5fd;
+}
+
+.gr-page .gr-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #93c5fd;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+}
+
+.gr-page .gr-report-type h2 {
+    margin-bottom: 7px;
+    color: #f1f5f9;
+    font-size: 17px;
+    font-weight: 650;
+}
+
+.gr-page .gr-report-type p {
+    margin: 0;
+    color: #bfd3eb;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   PANEL HEADINGS
+========================================= */
+
+.gr-page .gr-panel-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 23px;
+}
+
+.gr-page .gr-heading-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: rgba(59, 130, 246, 0.16);
+    color: #80baff;
+}
+
+.gr-page .gr-panel-heading h2 {
+    margin-bottom: 6px;
+    color: #edf4ff;
+    font-size: 16px;
+    font-weight: 650;
+}
+
+.gr-page .gr-panel-heading p {
+    margin: 0;
+    color: var(--gr-muted);
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+/* =========================================
+   DATE FILTERS
+========================================= */
+
+.gr-page .gr-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.gr-page .gr-filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 47px;
+    padding: 11px 13px;
+    border: 1px solid rgba(110, 145, 190, 0.24);
+    border-radius: 9px;
+    background: #0d1930;
+    color: #b5c7df;
+    font-size: 11px;
+    font-weight: 550;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.gr-page .gr-filter-button:hover {
+    border-color: rgba(96, 165, 250, 0.55);
+    background: #172c49;
+    color: #eaf3ff;
+}
+
+.gr-page .gr-filter-button.active {
+    border-color: #3b82f6;
+    background: linear-gradient(
+        120deg,
+        rgba(59, 130, 246, 0.25),
+        rgba(37, 99, 235, 0.13)
+    );
+    color: #93c5fd;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.08);
+}
+
+/* =========================================
+   CUSTOM DATE RANGE
+========================================= */
+
+.gr-page .gr-custom-dates {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+    padding-top: 22px;
+    margin-top: 22px;
+    border-top: 1px solid var(--gr-border);
+}
+
+.gr-page .gr-date-field {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 0;
+}
+
+.gr-page .gr-date-field label {
+    color: #dce8f8;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.gr-page .gr-date-field input {
+    width: 100%;
+    min-width: 0;
+    height: 44px;
+    padding: 10px 12px;
+    border: 1px solid rgba(110, 145, 190, 0.28);
+    border-radius: 9px;
+    outline: none;
+    background: #0b172b;
+    color: #eaf2ff;
+    color-scheme: dark;
+    font-size: 11px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gr-page .gr-date-field input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+/* =========================================
+   REPORT CONTENT
+========================================= */
+
+.gr-page .gr-content-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px 17px;
+}
+
+.gr-page .gr-content-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+    min-height: 43px;
+    padding: 10px 12px;
+    border: 1px solid rgba(100, 149, 237, 0.13);
+    border-radius: 9px;
+    background: rgba(8, 20, 39, 0.52);
+    color: #bed0e8;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.gr-page .gr-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.14);
+    color: #86efac;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* =========================================
+   ERROR MESSAGE
+========================================= */
+
+.gr-page .gr-error {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    width: 100%;
+    padding: 13px 16px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(248, 113, 113, 0.25);
+    border-radius: 10px;
+    background: rgba(239, 68, 68, 0.09);
+    color: #fca5a5;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.gr-page .gr-error svg {
+    flex-shrink: 0;
+}
+
+/* =========================================
+   GENERATE REPORT SECTION
+========================================= */
+
+.gr-page .gr-generate-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    padding: 23px 25px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(96, 165, 250, 0.28);
+    border-radius: 14px;
+    background: linear-gradient(
+        110deg,
+        #122b50,
+        #12365f 65%,
+        #102a46
+    );
+}
+
+.gr-page .gr-generate-section h3 {
+    margin-bottom: 7px;
+    color: #f1f5f9;
+    font-size: 15px;
+    font-weight: 650;
+}
+
+.gr-page .gr-generate-section p {
+    margin: 0;
+    color: #bfd3eb;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+.gr-page .gr-generate-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-shrink: 0;
+    min-height: 45px;
+    padding: 12px 19px;
+    border: 1px solid #3b82f6;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 650;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.25);
+    transition: 0.2s ease;
+}
+
+.gr-page .gr-generate-button:hover:not(:disabled) {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.gr-page .gr-generate-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.gr-page .gr-spin {
+    animation: gr-rotate 1s linear infinite;
+}
+
+@keyframes gr-rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.gr-page .gr-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    padding: 20px 2px;
+    margin-top: auto;
+    border-top: 1px solid var(--gr-border);
+    color: #8297b5;
+    font-size: 10px;
+}
+
+.gr-page .gr-footer::after {
+    content: "© 2026 Raise Your Voice";
+    color: #8297b5;
+}
+
+/* =========================================
+   TABLET RESPONSIVENESS
+========================================= */
+
+@media (max-width: 800px) {
+    .gr-page {
+        padding-right: 4%;
+        padding-left: 4%;
+    }
+
+    .gr-page .gr-header {
+        align-items: flex-start;
+    }
+
+    .gr-page .gr-filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
+
+@media (max-width: 600px) {
+    .gr-page {
+        padding: 23px 16px 0;
+    }
+
+    .gr-page .gr-header {
+        flex-direction: column;
+        gap: 17px;
+        margin-bottom: 22px;
+    }
+
+    .gr-page .gr-header h1 {
+        font-size: 27px;
+    }
+
+    .gr-page .gr-back-button {
+        min-height: 39px;
+    }
+
+    .gr-page .gr-panel {
+        padding: 20px;
+    }
+
+    .gr-page .gr-report-type {
+        align-items: flex-start;
+        gap: 14px;
+        padding: 20px;
+    }
+
+    .gr-page .gr-section-icon {
+        width: 46px;
+        height: 46px;
+    }
+
+    .gr-page .gr-report-type h2 {
+        font-size: 15px;
+    }
+
+    .gr-page .gr-custom-dates {
+        grid-template-columns: 1fr;
+    }
+
+    .gr-page .gr-generate-section {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .gr-page .gr-generate-button {
+        width: 100%;
+    }
+
+    .gr-page .gr-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 390px) {
+    .gr-page {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .gr-page .gr-header h1 {
+        font-size: 24px;
+    }
+
+    .gr-page .gr-panel {
+        padding: 16px;
+    }
+
+    .gr-page .gr-filter-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .gr-page .gr-filter-button {
+        min-height: 42px;
+    }
+
+    .gr-page .gr-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gr-page .gr-report-type {
+        align-items: flex-start;
+    }
+
+    .gr-page .gr-panel-heading h2 {
+        font-size: 14px;
+    }
+}

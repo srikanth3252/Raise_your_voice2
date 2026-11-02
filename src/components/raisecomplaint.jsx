@@ -1,9 +1,28 @@
-import { useState } from "react";
+
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import {
+    AlertCircle,
+    ArrowRight,
+    CheckCircle2,
+    FileText,
+    Image as ImageIcon,
+    Video,
+    Upload,
+    X,
+    ShieldCheck,
+    FileCheck2
+} from "lucide-react";
 import "../styles/raisecomplaint.css";
 
-function Raisecomplaint()
-{
+function Raisecomplaint() {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const email = location.state?.email || localStorage.getItem("email");
+
+    const [complaintsucesspopup, setcomplaintsucesspopup] = useState(false);
     const [showPopup, setShowPopup] = useState(true);
+    const [accepted, setAccepted] = useState(false);
 
     const [title, setTitle] = useState("");
     const [complaintCategory, setComplaintCategory] = useState("About Hostel");
@@ -13,253 +32,523 @@ function Raisecomplaint()
     const [fileName, setFileName] = useState("");
     const [previewUrl, setPreviewUrl] = useState("");
     const [fileType, setFileType] = useState("");
+    const [error, setError] = useState("");
+    const [submitting, setSubmitting] = useState(false);
 
-    function handleFileChange(e)
-    {
-        const file = e.target.files[0];
+    // Release preview URLs when they are replaced or the component unmounts.
+    useEffect(() => {
+        return () => {
+            if (previewUrl) {
+                URL.revokeObjectURL(previewUrl);
+            }
+        };
+    }, [previewUrl]);
 
-        if (!file)
+    function handleFileChange(e) {
+        const file = e.target.files?.[0];
+
+        if (!file) return;
+
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "video/mp4",
+            "video/webm",
+            "application/pdf"
+        ];
+
+        if (!allowedTypes.includes(file.type)) {
+            setError("Please upload an image, video, or PDF file.");
+            e.target.value = "";
             return;
+        }
 
+        if (file.size > 20 * 1024 * 1024) {
+            setError("File size must be less than 20 MB.");
+            e.target.value = "";
+            return;
+        }
+
+        setError("");
         setProof(file);
         setFileName(file.name);
-
-        const url = URL.createObjectURL(file);
-
-        setPreviewUrl(url);
         setFileType(file.type);
+
+        if (file.type.startsWith("image/") || file.type.startsWith("video/")) {
+            setPreviewUrl(URL.createObjectURL(file));
+        } else {
+            setPreviewUrl("");
+        }
     }
 
-    async function handleSubmit()
-    {
-       async function Store_complaints_database(formdata)
-       {
-           let res=await fetch("https://raiseyourvoice-production.up.railway.app/complaint",
-            {
-                method:"POST",
-                body:formdata
-            });
-
-            let data=await res.json();
-            return data;
-       }
-
-        if (
-            title.trim() === "" ||
-            complaintDescription.trim() === "" ||
-            !proof
-        )
-        {
-            alert("Please fill all fields and upload proof");
-            return;
-        }
-
-        const complaintData =
-        {
-            title,
-            complaintCategory,
-            complaintDescription,
-            proofName: proof.name
-        };
-        
-        const formdata=new FormData();
-        formdata.append("email",localStorage.getItem("email"));
-        formdata.append("title",title);
-        formdata.append("complaintCategory",complaintCategory);
-        formdata.append("complaintDescription",complaintDescription);
-        formdata.append("proof",proof);
-
-        try
-        {
-            let res=await Store_complaints_database(formdata);
-            console.log(res.message);
-        }
-        catch(err)
-           {
-              console.log(err.message);
-           }
-
-        
-
-        alert("Complaint Raised Successfully");
-
-        setTitle("");
-        setComplaintCategory("About Hostel");
-        setComplaintDescription("");
-
-        setProof("");
+    function removeProof() {
+        setProof(null);
         setFileName("");
         setPreviewUrl("");
         setFileType("");
+
+        const fileInput = document.getElementById("complaint-proof");
+        if (fileInput) {
+            fileInput.value = "";
+        }
+    }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        setError("");
+
+        if (!title.trim() || !complaintDescription.trim()) {
+            setError("Please enter a title and complaint description.");
+            return;
+        }
+
+        if (!accepted) {
+            setError("Please confirm that your complaint is genuine.");
+            return;
+        }
+
+        const formData = new FormData();
+
+        formData.append("title", title.trim());
+        formData.append("complaintCategory", complaintCategory);
+        formData.append("complaintDescription", complaintDescription.trim());
+
+        if (proof) {
+            formData.append("proof", proof);
+        }
+
+        const studentEmail = localStorage.getItem("email") || email;
+
+        if (studentEmail) {
+            formData.append("email", studentEmail);
+        }
+
+        try {
+            setSubmitting(true);
+
+            const response = await fetch("http://localhost:2000/complaint", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || "Failed to submit complaint.");
+            }
+
+            setcomplaintsucesspopup(true);
+
+            setTitle("");
+            setComplaintCategory("About Hostel");
+            setComplaintDescription("");
+            removeProof();
+            setAccepted(false);
+
+        } catch (err) {
+            console.error("Complaint submission error:", err);
+            setError(err.message || "Unable to submit complaint. Please try again.");
+        } finally {
+            setSubmitting(false);
+        }
     }
 
     return (
-        <>
-            {
-                showPopup &&
-                <div className="popupbox">
+        <main className="raisecomplaint-page">
 
-                    <h2>Before Raising Complaint</h2>
-
-                    <p>
-                        You can freely raise your complaint here without worrying
-                        about anyone.
-
-                        <br /><br />
-
-                        Your personal details and uploaded proofs will remain
-                        confidential and accessible only to authorized administrators.
-
-                        <br /><br />
-
-                        Please provide genuine information and valid proof.
-
-                        <br /><br />
-
-                        False or misleading complaints may result in disciplinary
-                        action according to institution rules.
-                    </p>
-
-                    <div className="popupbuttons">
-
-                        <button
-                            onClick={() => setShowPopup(false)}
-                        >
-                            Proceed
-                        </button>
-
-                    </div>
-
-                </div>
-            }
-
-            <section className="raisecomplaint">
-
-                <div className={`flex1 ${showPopup ? "blur" : ""}`}>
-
-                    <h1>Raise Complaint</h1>
-
-                    <p>
-                        Welcome, User.
-                        <br /><br />
-                        You can raise your concerns securely through the portal.
-                    </p>
-
-                    <div className="flex2">
-
-                        <div className="flex3">
-
-                            <label>Complaint Title:</label>
-
-                            <input
-                                type="text"
-                                value={title}
-                                placeholder="Enter complaint title"
-                                onChange={(e) =>
-                                {
-                                    setTitle(e.target.value);
-                                }}
-                            />
-
+            {/* GOOD-FAITH CONFIRMATION MODAL */}
+            {showPopup && (
+                <div className="complaint-modal-overlay">
+                    <div
+                        className="complaint-warning-modal"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="warning-title"
+                    >
+                        <div className="warning-icon">
+                            <AlertCircle size={29} />
                         </div>
 
-                        <div className="flex3">
+                        <p className="complaint-eyebrow">
+                            BEFORE YOU SUBMIT
+                        </p>
 
-                            <label>Complaint Category:</label>
+                        <h2 id="warning-title">
+                            Your voice matters
+                        </h2>
+
+                        <p className="warning-description">
+                            Share your concern honestly and provide accurate
+                            information to the best of your knowledge.
+                        </p>
+
+                        <div className="warning-note">
+                            <strong>Please remember</strong>
+                            <p>
+                                Knowingly false or malicious complaints may
+                                result in disciplinary action under university
+                                rules. Evidence is helpful, but it is optional.
+                            </p>
+                        </div>
+
+                        <label className="complaint-confirmation">
+                            <input
+                                type="checkbox"
+                                checked={accepted}
+                                onChange={(e) => setAccepted(e.target.checked)}
+                            />
+                            <span>
+                                I confirm that I am submitting this complaint
+                                in good faith.
+                            </span>
+                        </label>
+
+                        <div className="complaint-modal-actions">
+                            <button
+                                type="button"
+                                className="complaint-secondary-btn"
+                                onClick={() =>
+                                    navigate("/dashboard", {
+                                        state: { email }
+                                    })
+                                }
+                            >
+                                Go Back
+                            </button>
+
+                            <button
+                                type="button"
+                                className="complaint-primary-btn"
+                                disabled={!accepted}
+                                onClick={() => setShowPopup(false)}
+                            >
+                                Continue <ArrowRight size={16} />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* MAIN PAGE CONTENT */}
+            <div
+                className={`complaint-content ${
+                    showPopup ? "complaint-content-blurred" : ""
+                }`}
+            >
+                {/* PAGE HEADER */}
+                <header className="complaint-page-header">
+                    <div>
+                        <p className="complaint-breadcrumb">
+                            Student Portal / Raise Complaint
+                        </p>
+
+                        <h1>Raise a Complaint</h1>
+
+                        <p className="complaint-page-subtitle">
+                            Tell us what happened. Your concern deserves
+                            attention.
+                        </p>
+                    </div>
+
+                    <div className="complaint-header-icon">
+                        <FileText size={28} />
+                    </div>
+                </header>
+
+                {/* INFORMATION BANNER */}
+                <div className="complaint-info-banner">
+                    <span className="complaint-info-symbol">
+                        <AlertCircle size={20} />
+                    </span>
+
+                    <div>
+                        <strong>What happens next?</strong>
+                        <p>
+                            Once submitted, your complaint can be reviewed by
+                            an authorized administrator. A private communication
+                            room can be used if further clarification is needed.
+                        </p>
+                    </div>
+                </div>
+
+                {/* COMPLAINT FORM */}
+                <form
+                    className="complaint-form-card"
+                    onSubmit={handleSubmit}
+                >
+                    <div className="complaint-section-heading">
+                        <div>
+                            <h2>Complaint Details</h2>
+                            <p>
+                                Provide enough information to help us
+                                understand your concern.
+                            </p>
+                        </div>
+
+                        <span className="complaint-required-label">
+                            * Required
+                        </span>
+                    </div>
+
+                    <div className="complaint-form-grid">
+
+                        {/* TITLE */}
+                        <div className="complaint-field complaint-field-full">
+                            <label htmlFor="complaint-title">
+                                Complaint Title <span>*</span>
+                            </label>
+
+                            <input
+                                id="complaint-title"
+                                type="text"
+                                value={title}
+                                placeholder="Briefly describe your concern"
+                                maxLength={150}
+                                onChange={(e) => setTitle(e.target.value)}
+                                required
+                            />
+
+                            <small>
+                                {title.length}/150 characters
+                            </small>
+                        </div>
+
+                        {/* CATEGORY */}
+                        <div className="complaint-field">
+                            <label htmlFor="complaint-category">
+                                Category <span>*</span>
+                            </label>
 
                             <select
+                                id="complaint-category"
                                 value={complaintCategory}
                                 onChange={(e) =>
-                                {
-                                    setComplaintCategory(e.target.value);
-                                }}
+                                    setComplaintCategory(e.target.value)
+                                }
                             >
                                 <option>About Hostel</option>
                                 <option>About Faculty</option>
                                 <option>About Transport</option>
                                 <option>About Management</option>
                                 <option>About Infrastructure</option>
+                                <option>Harassment or Misconduct</option>
+                                <option>Campus Facilities</option>
                                 <option>Other</option>
                             </select>
-
                         </div>
 
-                        <div className="flex3">
-
-                            <label>Complaint Description</label>
+                        {/* DESCRIPTION */}
+                        <div className="complaint-field complaint-field-full">
+                            <label htmlFor="complaint-description">
+                                Complaint Description <span>*</span>
+                            </label>
 
                             <textarea
+                                id="complaint-description"
                                 value={complaintDescription}
-                                placeholder="Describe your issue clearly"
+                                placeholder="Explain the issue, when it happened, and how it affected you..."
+                                rows={7}
+                                maxLength={5000}
                                 onChange={(e) =>
-                                {
-                                    setComplaintDescription(e.target.value);
-                                }}
-                            ></textarea>
-
-                        </div>
-
-                        <div className="flex3">
-
-                            <label>Upload Proof (must require)</label>
-
-                            <input
-                                type="file"
-                                accept="image/*,video/*"
-                                onChange={handleFileChange}
+                                    setComplaintDescription(e.target.value)
+                                }
+                                required
                             />
 
-                            {
-                                fileName &&
-                                <p>{fileName}</p>
-                            }
-
-                            {
-                                fileType.startsWith("image/") &&
-                                <img
-                                    src={previewUrl}
-                                    alt="preview"
-                                    style={{
-                                        width: "100%",
-                                        marginTop: "15px",
-                                        borderRadius: "8px"
-                                    }}
-                                />
-                            }
-
-                            {
-                                fileType.startsWith("video/") &&
-                                <video
-                                    src={previewUrl}
-                                    controls
-                                    style={{
-                                        width: "100%",
-                                        marginTop: "15px",
-                                        borderRadius: "8px"
-                                    }}
-                                />
-                            }
-
-                            <p className="privacy">
-                                Your uploaded files and identity will remain
-                                confidential and accessible only to authorized administrators.
-                            </p>
-
+                            <small>
+                                {complaintDescription.length}/5000 characters
+                            </small>
                         </div>
+                    </div>
+
+                    <div className="complaint-section-divider" />
+
+                    {/* EVIDENCE SECTION */}
+                    <div className="complaint-section-heading">
+                        <div>
+                            <h2>Supporting Evidence</h2>
+                            <p>
+                                Attach a relevant file if you have one.
+                                You can also submit without evidence.
+                            </p>
+                        </div>
+
+                        <span className="complaint-optional-label">
+                            Optional
+                        </span>
+                    </div>
+
+                    <label
+                        htmlFor="complaint-proof"
+                        className="complaint-upload-area"
+                    >
+                        <span className="complaint-upload-icon">
+                            <Upload size={25} />
+                        </span>
+
+                        <strong>Choose a file to upload</strong>
+
+                        <span className="complaint-upload-description">
+                            Images, videos, or PDF documents · Max 20 MB
+                        </span>
+
+                        <span className="complaint-browse-btn">
+                            Browse Files
+                        </span>
+                    </label>
+
+                    <input
+                        id="complaint-proof"
+                        className="complaint-hidden-file"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,application/pdf"
+                        onChange={handleFileChange}
+                    />
+
+                    {/* SELECTED FILE */}
+                    {fileName && (
+                        <div className="complaint-file-card">
+                            <div className="complaint-file-icon">
+                                {fileType.startsWith("image/") ? (
+                                    <ImageIcon size={21} />
+                                ) : fileType.startsWith("video/") ? (
+                                    <Video size={21} />
+                                ) : (
+                                    <FileText size={21} />
+                                )}
+                            </div>
+
+                            <div className="complaint-file-info">
+                                <strong>{fileName}</strong>
+                                <span>
+                                    {proof
+                                        ? `${(proof.size / (1024 * 1024)).toFixed(2)} MB`
+                                        : ""}
+                                </span>
+                            </div>
+
+                            <button
+                                type="button"
+                                className="complaint-remove-file"
+                                onClick={removeProof}
+                                aria-label="Remove selected file"
+                            >
+                                <X size={17} />
+                                Remove
+                            </button>
+                        </div>
+                    )}
+
+                    {/* IMAGE PREVIEW */}
+                    {previewUrl && fileType.startsWith("image/") && (
+                        <img
+                            className="complaint-file-preview"
+                            src={previewUrl}
+                            alt="Selected evidence preview"
+                        />
+                    )}
+
+                    {/* VIDEO PREVIEW */}
+                    {previewUrl && fileType.startsWith("video/") && (
+                        <video
+                            className="complaint-file-preview"
+                            src={previewUrl}
+                            controls
+                        />
+                    )}
+
+                    {/* PRIVACY NOTE */}
+                    <div className="complaint-privacy-note">
+                        <ShieldCheck size={21} />
+
+                        <p>
+                            <strong>Privacy matters.</strong> Your complaint
+                            and evidence should only be accessible to
+                            authorized people. Actual confidentiality depends
+                            on the server's access controls.
+                        </p>
+                    </div>
+
+                    {/* ERROR MESSAGE */}
+                    {error && (
+                        <div className="complaint-error" role="alert">
+                            <AlertCircle size={17} />
+                            {error}
+                        </div>
+                    )}
+
+                    {/* FORM FOOTER */}
+                    <div className="complaint-form-footer">
+                        <p>
+                            <span>*</span> Required fields must be completed.
+                        </p>
+
+                        <button
+                            type="submit"
+                            className="complaint-submit-btn"
+                            disabled={submitting}
+                        >
+                            {submitting ? "Submitting..." : "Submit Complaint"}
+                            {!submitting && <ArrowRight size={17} />}
+                        </button>
+                    </div>
+                </form>
+
+                {/* PAGE FOOTER */}
+                <footer className="complaint-page-footer">
+                    <div className="complaint-footer-brand">
+                        <span className="complaint-footer-logo">V</span>
+                        <div>
+                            <strong>Raise Your Voice</strong>
+                            <small>Student Grievance Portal</small>
+                        </div>
+                    </div>
+
+                    <p>
+                        Your concerns deserve to be heard.
+                    </p>
+
+                    <span className="complaint-footer-copyright">
+                        © 2026 Raise Your Voice
+                    </span>
+                </footer>
+            </div>
+
+            {/* SUCCESS POPUP */}
+            {complaintsucesspopup && (
+                <div className="complaint-success-overlay">
+                    <div className="complaint-success-box">
+                        <div className="complaint-success-icon">
+                            <CheckCircle2 size={35} />
+                        </div>
+
+                        <p className="complaint-success-eyebrow">
+                            SUBMISSION COMPLETE
+                        </p>
+
+                        <h2>Complaint Raised Successfully!</h2>
+
+                        <p>
+                            Your complaint has been submitted successfully.
+                            The administration can now review your concern.
+                        </p>
 
                         <button
                             type="button"
-                            onClick={handleSubmit}
+                            onClick={() => {
+                                setcomplaintsucesspopup(false);
+                                navigate("/dashboard", {
+                                    state: { email }
+                                });
+                            }}
                         >
-                            Raise Complaint
+                            Back to Dashboard <ArrowRight size={17} />
                         </button>
-
                     </div>
-
                 </div>
-
-            </section>
-        </>
+            )}
+        </main>
     );
 }
 

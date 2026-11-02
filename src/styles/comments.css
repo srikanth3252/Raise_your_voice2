@@ -1,0 +1,241 @@
+
+/* COMMENTS POPUP OVERLAY */
+.comments-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 8, 23, 0.78);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 9999;
+}
+
+/* POPUP */
+.comments-modal {
+    width: 100%;
+    max-width: 550px;
+    max-height: 85vh;
+    background: #101c35;
+    border: 1px solid #263b5c;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    color: #eaf1ff;
+}
+
+/* HEADER */
+.comments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px;
+    border-bottom: 1px solid #263b5c;
+}
+
+.comments-header h2 {
+    margin: 0;
+    font-size: 21px;
+    color: #f1f5ff;
+}
+
+.comments-header p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    color: #91a6c5;
+}
+
+.comments-close {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 9px;
+    background: #1e2d49;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.comments-close:hover {
+    background: #334968;
+    color: white;
+}
+
+/* COMMENTS LIST */
+.comments-list {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 160px;
+    max-height: 420px;
+}
+
+.comments-message {
+    text-align: center;
+    color: #91a6c5;
+    padding: 35px 10px;
+    font-size: 14px;
+}
+
+/* SINGLE COMMENT */
+.single-comment {
+    display: flex;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #263b5c;
+}
+
+.single-comment:last-child {
+    border-bottom: none;
+}
+
+.comment-avatar {
+    width: 37px;
+    height: 37px;
+    min-width: 37px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.comment-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.comment-author-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.comment-author-row strong {
+    color: #eaf1ff;
+    font-size: 14px;
+}
+
+.comment-author-row span {
+    color: #8195b3;
+    font-size: 11px;
+}
+
+.comment-content p {
+    margin: 8px 0 0;
+    color: #c4d2e7;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+/* COMMENT ERROR */
+.comments-error {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 20px 12px;
+    color: #f87171;
+    font-size: 13px;
+}
+
+/* COMMENT INPUT FORM */
+.comments-form {
+    padding: 18px 20px;
+    border-top: 1px solid #263b5c;
+    background: #0c172c;
+}
+
+.comments-form textarea {
+    width: 100%;
+    min-height: 85px;
+    resize: vertical;
+    padding: 13px;
+    border: 1px solid #344b6d;
+    border-radius: 10px;
+    outline: none;
+    background: #162642;
+    color: #f1f5ff;
+    font-family: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: 0.2s;
+}
+
+.comments-form textarea::placeholder {
+    color: #8195b3;
+}
+
+.comments-form textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* POST BUTTON */
+.comments-form button {
+    margin-top: 12px;
+    margin-left: auto;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.comments-form button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+}
+
+.comments-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .comments-overlay {
+        padding: 12px;
+    }
+
+    .comments-modal {
+        max-height: 90vh;
+    }
+
+    .comments-header {
+        padding: 17px;
+    }
+
+    .comments-list {
+        padding: 15px;
+        max-height: 350px;
+    }
+
+    .comments-form {
+        padding: 15px;
+    }
+
+    .comment-author-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+    }
+}

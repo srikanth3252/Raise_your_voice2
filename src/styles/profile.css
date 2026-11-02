@@ -1,0 +1,133 @@
+.profile-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    background: #171923;
+    color: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+.user-profile-card {
+    width: 100%;
+    max-width: 600px;
+    padding: 35px;
+    box-sizing: border-box;
+    background: #1d202c;
+    border: 1px solid #303341;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    text-align: center;
+}
+
+.user-profile-card h1 {
+    margin: 0 0 25px;
+    font-size: 28px;
+    color: #f5f5f5;
+}
+
+.profile-avatar {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: #4541a5;
+    color: #ffffff;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.user-profile-card h2 {
+    margin: 10px 0 6px;
+    font-size: 23px;
+    overflow-wrap: anywhere;
+}
+
+.user-profile-card > p {
+    margin: 0 0 28px;
+    color: #a5adc0;
+    text-transform: capitalize;
+}
+
+.profile-details {
+    margin: 25px 0;
+    padding: 8px 20px;
+    border-radius: 12px;
+    background: #252938;
+    text-align: left;
+}
+
+.profile-details p {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 14px 0;
+    margin: 0;
+    border-bottom: 1px solid #383c4b;
+    overflow-wrap: anywhere;
+}
+
+.profile-details p:last-child {
+    border-bottom: none;
+}
+
+.profile-details strong {
+    flex-shrink: 0;
+    color: #a5adc0;
+}
+
+.profile-details p {
+    color: #f5f5f5;
+}
+
+.user-profile-card button,
+.profile-page button {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 9px;
+    background: #6257e8;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.user-profile-card button:hover,
+.profile-page button:hover {
+    background: #5045d0;
+    transform: translateY(-2px);
+}
+
+.profile-page > h2 {
+    color: #f5f5f5;
+}
+
+.profile-page > p {
+    color: #a5adc0;
+}
+
+@media (max-width: 500px) {
+    .user-profile-card {
+        padding: 25px 18px;
+    }
+
+    .user-profile-card h1 {
+        font-size: 24px;
+    }
+
+    .profile-details {
+        padding: 8px 12px;
+    }
+
+    .profile-details p {
+        flex-direction: column;
+        gap: 6px;
+    }
+}
