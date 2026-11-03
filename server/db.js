@@ -19,6 +19,10 @@ const db = mysql.createPool({
     keepAliveInitialDelay: 0
 });
 
+db.on("error", (err) => {
+    console.error("DATABASE POOL ERROR:", err);
+});
+
 db.getConnection((err, connection) => {
     if (err) {
         console.error("TiDB connection failed:", err);
