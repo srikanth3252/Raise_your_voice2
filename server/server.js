@@ -1306,8 +1306,8 @@ app.get("/comments/:complaint_id", (req, res) => {
 
 // FETCH COMPLETE COMPLAINT DETAILS
 
-app.get("/complaint/:complaint_id", (req, res) => {
 
+app.get("/complaint/:complaint_id", (req, res) => {
     const { complaint_id } = req.params;
 
     if (!Number.isInteger(Number(complaint_id)) || Number(complaint_id) <= 0) {
@@ -1315,11 +1315,6 @@ app.get("/complaint/:complaint_id", (req, res) => {
             message: "Invalid complaint ID."
         });
     }
-
-    db.query("SELECT DATABASE() AS db_name", (err, dbResult) => {
-    console.log("RENDER DATABASE:", dbResult);
-});
-console.log("REQUESTED COMPLAINT ID:", req.params.complaint_id);
 
     const sql = `
         SELECT
@@ -1336,20 +1331,12 @@ console.log("REQUESTED COMPLAINT ID:", req.params.complaint_id);
             u.username,
             u.email
         FROM complaints c
-        JOIN users u
+        LEFT JOIN users u
             ON c.user_id = u.user_id
         WHERE c.complaint_id = ?
     `;
 
-    db.query(
-    "SELECT DATABASE() AS db_name",
-    (dbErr, dbResult) => {
-        console.log("RENDER DATABASE:", dbResult);
-    }
-    );
-
     db.query(sql, [complaint_id], (err, result) => {
-
         if (err) {
             console.error("FETCH COMPLAINT ERROR:", err);
 
@@ -1357,9 +1344,6 @@ console.log("REQUESTED COMPLAINT ID:", req.params.complaint_id);
                 message: "Unable to fetch complaint details."
             });
         }
-
-        console.log("BACKEND COMPLAINT ID:", complaint_id);
-console.log("BACKEND QUERY RESULT:", result);
 
         if (result.length === 0) {
             return res.status(404).json({
@@ -1371,11 +1355,8 @@ console.log("BACKEND QUERY RESULT:", result);
             message: "Complaint details fetched successfully.",
             result: result[0]
         });
-
     });
-
 });
-
 
 
 
