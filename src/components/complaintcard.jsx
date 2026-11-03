@@ -135,6 +135,7 @@ function ComplaintCard({ complaint }) {
    
 async function handleViewComplaint() {
     setError("");
+    console.log("VIEW COMPLAINT ID:", complaint.complaint_id);
 
     try {
         const response = await fetch(
@@ -142,6 +143,7 @@ async function handleViewComplaint() {
         );
 
         const data = await response.json();
+        console.log("VIEW COMPLAINT RESPONSE:", data);
 
         if (!response.ok) {
             throw new Error(
