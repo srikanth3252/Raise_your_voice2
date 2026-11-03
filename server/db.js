@@ -25,10 +25,15 @@ db.on("error", (err) => {
 
 db.getConnection((err, connection) => {
     if (err) {
-        console.error("TiDB connection failed:", err);
+        console.error("TiDB connection failed:", err.message);
         return;
     }
 
     console.log("Connected to TiDB successfully!");
+
+    connection.on("error", (err) => {
+        console.error("TIDB CONNECTION ERROR:", err.code, err.message);
+    });
+
     connection.release();
 });
