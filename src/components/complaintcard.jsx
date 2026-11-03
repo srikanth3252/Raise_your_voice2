@@ -151,7 +151,7 @@ async function handleViewComplaint() {
             );
         }
 
-        navigate("/complaintdetailspage", {
+        navigate("/complaintdetails", {
             state: {
                 complaintdetails: data.result,
                 adminpage: role === "admin"
