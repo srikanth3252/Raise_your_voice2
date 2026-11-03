@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
-
+import { createPortal } from "react-dom";
 
 import {
 
@@ -2219,215 +2219,102 @@ try {
 
             {/* COMMENTS POPUP */}
 
-            {showComments && (
+            {showComments &&
+    createPortal(
+        <div
+            className="comments-overlay"
+            onClick={() => setShowComments(false)}
+        >
+            <section
+                className="comments-modal"
+                role="dialog"
+                aria-modal="true"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <div className="comments-header">
+                    <div>
+                        <h2>Comments</h2>
+                        <p>Complaint #{complaintId}</p>
+                    </div>
 
-                <div
-
-                    className="comments-overlay"
-
-                    onClick={() => setShowComments(false)}
-
-                >
-
-                    <section
-
-                        className="comments-modal"
-
-                        role="dialog"
-
-                        aria-modal="true"
-
-                        aria-labelledby="comments-heading"
-
-                        onClick={e => e.stopPropagation()}
-
+                    <button
+                        type="button"
+                        className="comments-close"
+                        onClick={() => setShowComments(false)}
                     >
-
-                        <div className="comments-header">
-
-                            <div>
-
-                                <h2 id="comments-heading">Comments</h2>
-
-                                <p>Complaint #{complaintId}</p>
-
-                            </div>
-
-
-
-                            <button
-
-                                type="button"
-
-                                className="comments-close"
-
-                                onClick={() => setShowComments(false)}
-
-                                aria-label="Close comments"
-
-                            >
-
-                                <X size={21} />
-
-                            </button>
-
-                        </div>
-
-
-
-                        {/* COMMENT LIST */}
-
-                        <div className="comments-list">
-
-                            {loadingComments ? (
-
-                                <p className="comments-message">
-
-                                    Loading comments...
-
-                                </p>
-
-                            ) : comments.length === 0 ? (
-
-                                <p className="comments-message">
-
-                                    No comments yet. Be the first to comment!
-
-                                </p>
-
-                            ) : (
-
-                                comments.map(item => (
-
-                                    <div
-
-                                        className="single-comment"
-
-                                        key={item.comment_id}
-
-                                    >
-
-                                        <div className="comment-avatar">
-
-                                            {(item.username || "U")
-
-                                                .charAt(0)
-
-                                                .toUpperCase()}
-
-                                        </div>
-
-
-
-                                        <div className="comment-content">
-
-                                            <div className="comment-author-row">
-
-                                                <strong>
-
-                                                    {item.username || "Student"}
-
-                                                </strong>
-
-
-
-                                                <span>
-
-                                                    {item.created_at
-
-                                                        ? new Date(item.created_at).toLocaleString()
-
-                                                        : ""}
-
-                                                </span>
-
-                                            </div>
-
-
-
-                                            <p>{item.comment}</p>
-
-                                        </div>
-
-                                    </div>
-
-                                ))
-
-                            )}
-
-                        </div>
-
-
-
-                        {commentError && (
-
-                            <p className="comments-error" role="alert">
-
-                                <AlertCircle size={14} />
-
-                                {commentError}
-
-                            </p>
-
-                        )}
-
-
-
-                        {/* STUDENT COMMENT INPUT */}
-
-                        {role === "student" && (
-
-                            <form
-
-                                className="comments-form"
-
-                                onSubmit={handlePostComment}
-
-                            >
-
-                                <textarea
-
-                                    value={commentText}
-
-                                    onChange={e => setCommentText(e.target.value)}
-
-                                    placeholder="Write your comment..."
-
-                                    rows={3}
-
-                                    maxLength={1000}
-
-                                />
-
-
-
-                                <button
-
-                                    type="submit"
-
-                                    disabled={
-
-                                        postingComment || !commentText.trim()
-
-                                    }
-
-                                >
-
-                                    <Send size={15} />
-
-                                    {postingComment ? "Posting..." : "Post Comment"}
-
-                                </button>
-
-                            </form>
-
-                        )}
-
-                    </section>
-
+                        <X size={21} />
+                    </button>
                 </div>
 
-            )}
+                <div className="comments-list">
+                    {loadingComments ? (
+                        <p className="comments-message">
+                            Loading comments...
+                        </p>
+                    ) : comments.length === 0 ? (
+                        <p className="comments-message">
+                            No comments yet. Be the first to comment!
+                        </p>
+                    ) : (
+                        comments.map((item) => (
+                            <div
+                                className="single-comment"
+                                key={item.comment_id}
+                            >
+                                <div className="comment-avatar">
+                                    {(item.username || "U")
+                                        .charAt(0)
+                                        .toUpperCase()}
+                                </div>
+
+                                <div className="comment-content">
+                                    <div className="comment-author-row">
+                                        <strong>
+                                            {item.username || "Student"}
+                                        </strong>
+
+                                        <span>
+                                            {item.created_at
+                                                ? new Date(item.created_at)
+                                                    .toLocaleString()
+                                                : ""}
+                                        </span>
+                                    </div>
+
+                                    <p>{item.comment}</p>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+
+                <form
+                    className="comments-form"
+                    onSubmit={handlePostComment}
+                >
+                    <textarea
+                        value={commentText}
+                        onChange={(e) => setCommentText(e.target.value)}
+                        placeholder="Write your comment..."
+                        maxLength={1000}
+                        rows={3}
+                    />
+
+                    {commentError && (
+                        <p className="comments-error">{commentError}</p>
+                    )}
+
+                    <button
+                        type="submit"
+                        disabled={postingComment || !commentText.trim()}
+                    >
+                        {postingComment ? "Posting..." : "Post Comment"}
+                    </button>
+                </form>
+            </section>
+        </div>,
+        document.body
+    )}
 
 
             {/* SUCCESS POPUP AFTER ADMIN DECISION */}
