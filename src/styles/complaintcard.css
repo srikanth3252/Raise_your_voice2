@@ -11,9 +11,9 @@
 }
 
 .complaint-card:hover {
-    transform: translateY(-2px);
-    border-color: #3d69bd;
-    box-shadow: 0 9px 26px #0000002b;
+    border-color: #263957;
+    box-shadow: 0 5px 18px #00000016;
+    transform: none;
 }
 
 .cc-topline {

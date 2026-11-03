@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { createPortal } from "react-dom";
 import {
     ThumbsUp,
     MessageCircle,
@@ -359,11 +359,10 @@ async function handleViewComplaint() {
 
 
             {/* COMMENTS POPUP */}
-            {showComments && (
-                <div
-                    className="comments-overlay"
+            {showComments && createPortal(
+                <div className="comments-overlay">
                     onClick={() => setShowComments(false)}
-                >
+                 
                     <section
                         className="comments-modal"
                         role="dialog"
@@ -477,8 +476,10 @@ async function handleViewComplaint() {
                         )}
 
                     </section>
-                </div>
-            )}
+                    </div>,
+                    document.body
+                )}
+            
 
         </article>
     );
