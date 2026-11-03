@@ -1336,6 +1336,13 @@ app.get("/complaint/:complaint_id", (req, res) => {
         WHERE c.complaint_id = ?
     `;
 
+    db.query(
+    "SELECT DATABASE() AS db_name",
+    (dbErr, dbResult) => {
+        console.log("RENDER DATABASE:", dbResult);
+    }
+    );
+
     db.query(sql, [complaint_id], (err, result) => {
 
         if (err) {
@@ -1345,6 +1352,9 @@ app.get("/complaint/:complaint_id", (req, res) => {
                 message: "Unable to fetch complaint details."
             });
         }
+
+        console.log("BACKEND COMPLAINT ID:", complaint_id);
+console.log("BACKEND QUERY RESULT:", result);
 
         if (result.length === 0) {
             return res.status(404).json({
