@@ -1362,87 +1362,35 @@ app.get("/complaint/:complaint_id", (req, res) => {
 
 
 
-// GET: Fetch conversation messages for a complaint
+
+/* ============================================
+   GET: Fetch conversation messages
+   Only complaint owner and admin can access
+============================================ */
+
 app.get("/conversation/:complaint_id", (req, res) => {
     const { complaint_id } = req.params;
+    const { email, role } = req.query;
 
     if (!Number.isInteger(Number(complaint_id)) || Number(complaint_id) <= 0) {
-        return res.status(400).json({ message: "Invalid complaint ID." });
-    }
-
-    const sql = `
-        SELECT
-            cm.message_id,
-            cm.complaint_id,
-            cm.user_id,
-            cm.admin_id,
-            cm.message,
-            cm.created_at,
-            CASE
-                WHEN cm.user_id IS NOT NULL THEN u.username
-                WHEN cm.admin_id IS NOT NULL THEN a.admin_name
-            END AS sender_name,
-            CASE
-                WHEN cm.user_id IS NOT NULL THEN 'student'
-                WHEN cm.admin_id IS NOT NULL THEN 'admin'
-            END AS sender_role
-        FROM conversation_messages cm
-        LEFT JOIN users u ON cm.user_id = u.user_id
-        LEFT JOIN admins a ON cm.admin_id = a.admin_id
-        WHERE cm.complaint_id = ?
-        ORDER BY cm.created_at ASC, cm.message_id ASC
-    `;
-
-    db.query(sql, [complaint_id], (err, result) => {
-        if (err) {
-            console.error("FETCH CONVERSATION ERROR:", err);
-            return res.status(500).json({
-                message: "Unable to fetch conversation."
-            });
-        }
-
-        return res.status(200).json({
-            message: "Conversation fetched successfully.",
-            messages: result
-        });
-    });
-});
-
-
-
-// POST: Send a conversation message and create notification
-app.post("/conversation", (req, res) => {
-    const { complaint_id, email, role, message } = req.body;
-
-    if (!Number.isInteger(Number(complaint_id)) || Number(complaint_id) <= 0) {
-        return res.status(400).json({ message: "Invalid complaint ID." });
-    }
-
-    if (!email || !role || !message || !message.trim()) {
         return res.status(400).json({
-            message: "Email and message are required."
+            message: "Invalid complaint ID."
         });
     }
 
-    if (!["student", "admin"].includes(role)) {
-        return res.status(400).json({ message: "Invalid sender role." });
-    }
-
-    const cleanMessage = message.trim();
-
-    if (cleanMessage.length > 2000) {
-        return res.status(400).json({
-            message: "Message cannot exceed 2000 characters."
+    if (!email || !role || !["student", "admin"].includes(role)) {
+        return res.status(401).json({
+            message: "Unauthorized."
         });
     }
 
-    // Check complaint and get its owner
+    // Get complaint owner
     db.query(
-        "SELECT complaint_id, user_id FROM complaints WHERE complaint_id = ?",
+        "SELECT user_id FROM complaints WHERE complaint_id = ?",
         [complaint_id],
         (err, complaintResult) => {
             if (err) {
-                console.error(err);
+                console.error("COMPLAINT CHECK ERROR:", err);
                 return res.status(500).json({
                     message: "Database error."
                 });
@@ -1454,29 +1402,157 @@ app.post("/conversation", (req, res) => {
                 });
             }
 
-            const complaintOwnerId = complaintResult[0].user_id;
+            const ownerId = Number(complaintResult[0].user_id);
 
-            // Find sender
+            // Verify sender
+            const senderQuery = role === "student"
+                ? "SELECT user_id FROM users WHERE email = ?"
+                : "SELECT admin_id FROM admins WHERE email = ?";
+
+            db.query(senderQuery, [email], (err, senderResult) => {
+                if (err) {
+                    console.error("SENDER CHECK ERROR:", err);
+                    return res.status(500).json({
+                        message: "Database error."
+                    });
+                }
+
+                if (senderResult.length === 0) {
+                    return res.status(401).json({
+                        message: "Sender not found."
+                    });
+                }
+
+                // Only complaint owner can access as student
+                if (
+                    role === "student" &&
+                    Number(senderResult[0].user_id) !== ownerId
+                ) {
+                    return res.status(403).json({
+                        message: "Only the complaint owner can access this conversation."
+                    });
+                }
+
+                // Fetch messages
+                const sql = `
+                    SELECT
+                        cm.message_id,
+                        cm.complaint_id,
+                        cm.user_id,
+                        cm.admin_id,
+                        cm.message,
+                        cm.created_at,
+                        CASE
+                            WHEN cm.user_id IS NOT NULL THEN u.username
+                            WHEN cm.admin_id IS NOT NULL THEN a.admin_name
+                        END AS sender_name,
+                        CASE
+                            WHEN cm.user_id IS NOT NULL THEN 'student'
+                            WHEN cm.admin_id IS NOT NULL THEN 'admin'
+                        END AS sender_role
+                    FROM conversation_messages cm
+                    LEFT JOIN users u ON cm.user_id = u.user_id
+                    LEFT JOIN admins a ON cm.admin_id = a.admin_id
+                    WHERE cm.complaint_id = ?
+                    ORDER BY cm.created_at ASC, cm.message_id ASC
+                `;
+
+                db.query(sql, [complaint_id], (err, result) => {
+                    if (err) {
+                        console.error("FETCH CONVERSATION ERROR:", err);
+                        return res.status(500).json({
+                            message: "Unable to fetch conversation."
+                        });
+                    }
+
+                    return res.status(200).json({
+                        message: "Conversation fetched successfully.",
+                        messages: result
+                    });
+                });
+            });
+        }
+    );
+});
+
+
+/* ============================================
+   POST: Send conversation message
+   Only complaint owner and admin can send
+============================================ */
+
+app.post("/conversation", (req, res) => {
+    const { complaint_id, email, role, message } = req.body;
+
+    if (!Number.isInteger(Number(complaint_id)) || Number(complaint_id) <= 0) {
+        return res.status(400).json({
+            message: "Invalid complaint ID."
+        });
+    }
+
+    if (!email || !role || !message || !message.trim()) {
+        return res.status(400).json({
+            message: "Email and message are required."
+        });
+    }
+
+    if (!["student", "admin"].includes(role)) {
+        return res.status(400).json({
+            message: "Invalid sender role."
+        });
+    }
+
+    const cleanMessage = message.trim();
+
+    if (cleanMessage.length > 2000) {
+        return res.status(400).json({
+            message: "Message cannot exceed 2000 characters."
+        });
+    }
+
+    // Get complaint owner
+    db.query(
+        "SELECT complaint_id, user_id FROM complaints WHERE complaint_id = ?",
+        [complaint_id],
+        (err, complaintResult) => {
+            if (err) {
+                console.error("COMPLAINT CHECK ERROR:", err);
+                return res.status(500).json({
+                    message: "Database error."
+                });
+            }
+
+            if (complaintResult.length === 0) {
+                return res.status(404).json({
+                    message: "Complaint not found."
+                });
+            }
+
+            const complaintOwnerId = Number(
+                complaintResult[0].user_id
+            );
+
+            // Verify sender
             const senderQuery = role === "student"
                 ? "SELECT user_id FROM users WHERE email = ?"
                 : "SELECT admin_id, admin_name FROM admins WHERE email = ?";
 
             db.query(senderQuery, [email], (err, senderResult) => {
                 if (err) {
-                    console.error(err);
+                    console.error("SENDER CHECK ERROR:", err);
                     return res.status(500).json({
                         message: "Unable to verify sender."
                     });
                 }
 
                 if (senderResult.length === 0) {
-                    return res.status(404).json({
+                    return res.status(401).json({
                         message: "Sender not found."
                     });
                 }
 
                 const user_id = role === "student"
-                    ? senderResult[0].user_id
+                    ? Number(senderResult[0].user_id)
                     : null;
 
                 const admin_id = role === "admin"
@@ -1487,14 +1563,17 @@ app.post("/conversation", (req, res) => {
                     ? senderResult[0].admin_name
                     : null;
 
-                // Only the complaint owner can send as a student
-                if (role === "student" && user_id !== complaintOwnerId) {
+                // Student must be complaint owner
+                if (
+                    role === "student" &&
+                    Number(user_id) !== complaintOwnerId
+                ) {
                     return res.status(403).json({
-                        message: "You cannot access this conversation."
+                        message: "Only the complaint owner can access this conversation."
                     });
                 }
 
-                // Save conversation message
+                // Insert message
                 const insertQuery = `
                     INSERT INTO conversation_messages
                     (complaint_id, user_id, admin_id, message)
@@ -1514,7 +1593,7 @@ app.post("/conversation", (req, res) => {
 
                         const messageId = result.insertId;
 
-                        // Create notification only when admin sends a message
+                        // Admin message notification
                         if (role === "admin") {
                             const notificationQuery = `
                                 INSERT INTO notifications
@@ -1552,7 +1631,6 @@ app.post("/conversation", (req, res) => {
                                 }
                             );
                         } else {
-                            // Student messages do not notify themselves
                             return res.status(201).json({
                                 message: "Message sent successfully.",
                                 message_id: messageId
@@ -1564,6 +1642,7 @@ app.post("/conversation", (req, res) => {
         }
     );
 });
+
 
 
 

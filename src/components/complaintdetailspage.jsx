@@ -51,7 +51,7 @@ function ComplaintDetails() {
     const role = localStorage.getItem("role");
 
     const email = localStorage.getItem("email");
-
+    const [showAccessDenied, setShowAccessDenied] = useState(false);
 
 
     const location = useLocation();
@@ -833,11 +833,45 @@ try {
 
 
 
-    function toggleConversation() {
-
-        setShowConversation(previous => !previous);
-
+    async function toggleConversation() {
+    if (showConversation) {
+        setShowConversation(false);
+        return;
     }
+
+    if (!email || !role || !complaintId) {
+        setShowAccessDenied(false);
+        alert("Please log in to access the conversation.");
+        return;
+    }
+
+    try {
+        const params = new URLSearchParams({ email, role });
+
+        const response = await fetch(
+            `${API}/conversation/${complaintId}?${params.toString()}`
+        );
+
+        const data = await response.json();
+
+        if (response.status === 403) {
+            setShowAccessDenied(true);
+            return;
+        }
+
+        if (!response.ok) {
+            alert(data.message || "Unable to open conversation.");
+            return;
+        }
+
+        setMessages(data.messages || []);
+        setConversationError("");
+        setShowConversation(true);
+    } catch (error) {
+        console.error("Conversation error:", error);
+        alert("Unable to connect to the server.");
+    }
+}
 
 
 
@@ -2344,6 +2378,39 @@ try {
                     </div>
                 </div>
             )}
+
+            {showAccessDenied && createPortal(
+    <div
+        className="access-denied-overlay"
+        onClick={() => setShowAccessDenied(false)}
+    >
+        <div
+            className="access-denied-modal"
+            role="dialog"
+            aria-modal="true"
+            onClick={(e) => e.stopPropagation()}
+        >
+            <div className="access-denied-icon">
+                <AlertCircle size={32} />
+            </div>
+
+            <h2>Access Denied</h2>
+
+            <p>
+                You cannot view this conversation.
+                Only the complaint owner can access it.
+            </p>
+
+            <button
+                type="button"
+                onClick={() => setShowAccessDenied(false)}
+            >
+                OK
+            </button>
+        </div>
+    </div>,
+    document.body
+)}
 
         </div>
 
