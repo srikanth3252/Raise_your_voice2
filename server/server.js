@@ -1316,6 +1316,11 @@ app.get("/complaint/:complaint_id", (req, res) => {
         });
     }
 
+    db.query("SELECT DATABASE() AS db_name", (err, dbResult) => {
+    console.log("RENDER DATABASE:", dbResult);
+});
+console.log("REQUESTED COMPLAINT ID:", req.params.complaint_id);
+
     const sql = `
         SELECT
             c.complaint_id,
